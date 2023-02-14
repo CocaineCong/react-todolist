@@ -1,0 +1,72 @@
+
+@bgcolor: #f0f2f5;
+
+body{
+    font-size: 14px;
+    color: #333;
+    font-family: "微软雅黑";
+    background: @bgcolor;
+}
+
+#app{
+    height: 100vh;
+}
+
+header{
+    height: 70px;
+    background: #fff;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .right{
+        height: 40px;
+        .avatar{
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        span{
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .ant-dropdown-link{
+            height: 60px;
+            display: block;
+            color: #333;
+            &:hover{
+                color: #1890ff;
+            }
+        }
+    }
+}
+
+
+
+.container{
+    display: flex;
+    justify-content: space-between;
+    .aside{
+        height: auto;
+    }
+    height: auto;
+    .container_box{
+        flex: 1;
+        box-sizing: border-box;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        .container_content{
+            height: auto;
+            overflow: hidden;
+        }
+    }
+}
+
+.footer_content{
+    height: 30px;
+    background: #001529;
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
+}
