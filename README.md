@@ -1,46 +1,48 @@
-# Getting Started with Create React App
+# React Todolist
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+> 学习React时候的练手项目
 
-## Available Scripts
+这个是ts版本，一开始是用js的，后面都改用ts。所以用这个来改来练手。\
+js版本在这里:[https://github.com/CocaineCong/react-todolist-js](https://github.com/CocaineCong/react-todolist-js) \
+后端在这里：[https://github.com/CocaineCong/TodoList](https://github.com/CocaineCong/TodoList)\
 
-In the project directory, you can run:
+后续可能会用服务器，方便大家调用接口开发使用。
 
-### `npm start`
+## 主要涉及到以下几点：
+- typescript
+- 基于axios封装一个request请求，并且添加拦截器
+- 父传值给子组件
+- 基于antd和antd pro的一些列组件操作
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 功能：
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- 用户注册登陆
+- 列表的增删改查
 
-### `npm test`
+登陆页面
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+![在这里插入图片描述](https://img-blog.csdnimg.cn/821a978c00044739898f7ca555a9b670.png)
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+主题页面
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![在这里插入图片描述](https://img-blog.csdnimg.cn/875eaa8c390b40ce91018481066824e0.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+新增备忘录的页面
 
-### `npm run eject`
+![在这里插入图片描述](https://img-blog.csdnimg.cn/820f67b8ee5f4e4281c91e64cee36e28.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 如何运行
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+安装必要的第三方依赖包
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```shell
+npm install
+```
 
-## Learn More
+运行文件
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```shell
+npm start
+```
