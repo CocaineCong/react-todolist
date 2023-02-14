@@ -1,7 +1,7 @@
 import { Button, Form, message, Input, Modal, MessageArgsProps} from 'antd';
 import React, {useState} from 'react';
 // @ts-ignore
-import {TaskCreateApi} from "../request/api.ts";
+import {TaskCreateApi} from "../request/api";
 
 
 const TaskForm: React.FC = (props) => {
@@ -27,6 +27,7 @@ const TaskForm: React.FC = (props) => {
         TaskCreateApi({
             title: title,
             content: content
+            // @ts-ignore
         }).then((res: { status: number; msg: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | MessageArgsProps | null | undefined; }) =>{
             if(res.status===200){
                 message.success(res.msg).then()

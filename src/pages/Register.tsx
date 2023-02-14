@@ -4,7 +4,7 @@ import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import {Link, useNavigate} from 'react-router-dom'
 import "./less/Login.less"
 // @ts-ignore
-import {RegisterApi} from "../request/api.tx";
+import {RegisterApi} from "../request/api";
 
 
 const Register: React.FC = () => {
@@ -14,6 +14,7 @@ const Register: React.FC = () => {
         RegisterApi({
             user_name: values.username,
             password: values.password
+            // @ts-ignore
         }).then((res: { status: number; msg: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | MessageArgsProps | null | undefined; }) => {
             console.log(res)
             if(res.status===200){

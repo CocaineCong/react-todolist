@@ -2,7 +2,7 @@ import { ProList } from '@ant-design/pro-components';
 import {message, MessageArgsProps, Pagination, Space, Tag} from 'antd';
 import React, {useState, useEffect} from 'react';
 // @ts-ignore
-import {TaskListApi, TaskUpdateApi, TaskDeleteApi} from "../request/api.ts";
+import {TaskListApi, TaskUpdateApi, TaskDeleteApi} from "../request/api";
 import moment from "moment";
 import TaskForm from "./Form";
 
@@ -24,6 +24,7 @@ const List: React.FC = () => {
         TaskListApi({
             start: num,
             limit: pageSize,
+            // @ts-ignore
         }).then((res: { status: number; data: { item: any[] | ((prevState: { id: string; title: string; content: string; start_time: string; }[]) => { id: string; title: string; content: string; start_time: string; }[]) | null; total: React.SetStateAction<number>; }; msg: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | MessageArgsProps | null | undefined; })=>{
             if (res.status === 200 && res.data.item !== null ){
                 // @ts-ignore
@@ -43,9 +44,11 @@ const List: React.FC = () => {
         const {id,title,content,status} = values
         TaskUpdateApi({
             id:id,
+            // @ts-ignore
             title:title,
             content:content,
             status:status
+            // @ts-ignore
         }).then((res: { status: number; msg: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | MessageArgsProps | null | undefined; })=>{
             if (res.status === 200){
                 message.success(res.msg).then()
@@ -59,6 +62,7 @@ const List: React.FC = () => {
         const {id} = values
         TaskDeleteApi({
             id:id,
+            // @ts-ignore
         }).then((res: { status: number; msg: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | MessageArgsProps | null | undefined; })=>{
             if (res.status === 200){
                 message.success(res.msg).then()

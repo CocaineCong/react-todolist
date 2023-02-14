@@ -1,10 +1,11 @@
 import React,{useState,useEffect} from "react";
-import {Layout, message} from "antd";
-import { DownOutlined, SmileOutlined } from '@ant-design/icons';
-import { Dropdown, Space } from 'antd';
-import {Link,useNavigate} from "react-router-dom";
+// @ts-ignore
+import { DownOutlined } from '@ant-design/icons';
+import { Dropdown, Space, message } from 'antd';
+import {useNavigate} from "react-router-dom";
+import '../assets/base.less'
 
-export default function Header() {
+const Header: React.FC = () => {
     const [avatar,setAvatar]=useState('')
     const [userName,setUserName]=useState("")
     const navigate = useNavigate();
@@ -46,6 +47,7 @@ export default function Header() {
                         items,
                     }}
                 >
+                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                     <a onClick={(e) => e.preventDefault()}>
                         <Space>
                             <img src={avatar} className="avatar" alt=""/>
@@ -58,3 +60,5 @@ export default function Header() {
         </header>
     )
 }
+
+export default Header;

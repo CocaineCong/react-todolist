@@ -7,11 +7,11 @@ import List from "../pages/List";
 const BaseRouter = () => (
     <Router>
         <Routes>
-            <Route path='/' ><App />
-                <Route path='/list'><List /></Route>
+            <Route path='/' element={<App />}>
+                <Route path='/list' element={<List />}></Route>
             </Route>
-            <Route path='/login'><Login /></Route>
-            <Route path='/register'><Register/></Route>
+            <Route path='/login' element={<Login />}></Route>
+            <Route path='/register' element={<Register/>}></Route>
         </Routes>
     </Router>
 )
