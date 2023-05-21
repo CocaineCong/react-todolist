@@ -1,7 +1,7 @@
 import { Button, Form, message, Input, Modal, MessageArgsProps} from 'antd';
 import React, {useState} from 'react';
-// @ts-ignore
-import {TaskCreateApi} from "../request/api";
+import { Code } from '../constant';
+import { createTask } from '../request/task';
 
 
 const TaskForm: React.FC = (props:any) => {
@@ -21,16 +21,17 @@ const TaskForm: React.FC = (props:any) => {
         form.submit()
     }
     // 提交后获取表单数据，请求接口，重置表单并关闭
-    const onSubmit = (values: { title: string; content: string; }) => {
-        let {title, content} = values;
-        TaskCreateApi({
+    const onSubmit = (values: { title: string; content: string;status:any }) => {
+        let {title, content,status} = values;
+        createTask({
             title: title,
-            content: content
-        }).then((res: { status: number; msg: any }) =>{
-            if(res.status===200){
-                message.success(res.msg).then()
+            content: content,
+            status:status,
+        }).then(res =>{
+            if(res.status === Code.SuccessCode){
+                message.success(res?.data?.msg).then()
             }else{
-                message.error(res.msg).then()
+                message.error(res?.data?.error).then()
             }
             if (onCreate){
                 onCreate()
