@@ -3,28 +3,27 @@ import { Button, message, Form, Input, MessageArgsProps} from 'antd';
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import {Link, useNavigate} from 'react-router-dom'
 import "../assets/login.less"
-import {RegisterApi} from "../request/api";
+import { register } from '../request/user';
+import { Code } from '../constant';
+import { useDispatch } from 'react-redux';
+import { save } from '../store/user';
 
 const Register: React.FC = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch();
 
-    const onFinish = (values: { username: any; password: any; }) => {
-        RegisterApi({
-            user_name: values.username,
-            password: values.password
-            // @ts-ignore
-        }).then((res: { status: number; msg: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | MessageArgsProps | null | undefined; }) => {
-            console.log(res)
-            if(res.status===200){
-                message.success("注册成功").then();
-                // 跳到登录页
-                setTimeout(()=>{
-                    navigate('/login')
-                } ,800)
-            }else{
-                message.error(res.msg).then();
-            }
-        })
+    const onFinish = async (values: {
+        user_name: string;
+        password: string;
+    }) => {
+        const data:any = await register({...values});
+        if (data.status === Code.SuccessCode) {
+            dispatch(save({...data.data.user, token: data.data.token}));
+            message.success("登陆成功")
+            navigate('/login');
+        } else {
+            message.error("账号名/密码错误")
+        }
     };
 
     return (

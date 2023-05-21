@@ -1,9 +1,10 @@
 import { ProList } from '@ant-design/pro-components';
 import {message, MessageArgsProps, Pagination, Space, Tag} from 'antd';
 import React, {useState, useEffect} from 'react';
-import {TaskListApi, TaskUpdateApi, TaskDeleteApi} from "../request/api";
 import moment from "moment";
 import TaskForm from "./Form";
+import { deleteTask, listTask, updateTask } from '../request/task';
+import { Code } from '../constant';
 
 const defaultData = [
     {
@@ -19,54 +20,64 @@ const List: React.FC = () => {
     const [current, setCurrent] = useState(1)
     const [pageSize, setPageSize] = useState(10)
 
-    const getList = (num: React.SetStateAction<number>) => {
-        TaskListApi({
+    // const getList = (num: number) => {
+    //     listTask({
+    //         start: num,
+    //         limit: pageSize,
+    //     }).then(res)=>{
+    //         if (res.status === 200 && res.data.item !== null ){
+    //             // @ts-ignore
+    //             (res.data.item)?.map((value: { start_time: string; }, _: any)=>{
+    //                     value.start_time = moment(parseInt(value.start_time)*1000).format("YYYY-MM-DD HH:mm:ss");
+    //                     })
+    //             setDataSource(res.data.item)
+    //             setTotal(res.data.total)
+    //             setCurrent(num)
+    //         }else if (res.status!==200){
+    //             message.error(res.msg).then()
+    //         }
+    //     })
+    // }
+    const getList = async (num: number)=> {
+        let res:any = await listTask({
             start: num,
             limit: pageSize,
-            // @ts-ignore
-        }).then((res: { status: number; data: { item: any[] | ((prevState: { id: string; title: string; content: string; start_time: string; }[]) => { id: string; title: string; content: string; start_time: string; }[]) | null; total: React.SetStateAction<number>; }; msg: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | MessageArgsProps | null | undefined; })=>{
-            if (res.status === 200 && res.data.item !== null ){
-                // @ts-ignore
-                (res.data.item)?.map((value: { start_time: string; }, _: any)=>{
-                        value.start_time = moment(parseInt(value.start_time)*1000).format("YYYY-MM-DD HH:mm:ss");
-                        })
-                setDataSource(res.data.item)
-                setTotal(res.data.total)
-                setCurrent(num)
-            }else if (res.status!==200){
-                message.error(res.msg).then()
-            }
         })
+        if (res.status === Code.SuccessCode){
+            (res.data.item)?.map((value: { start_time: string; }, _: any)=>{
+                    value.start_time = moment(parseInt(value.start_time)*1000).format("YYYY-MM-DD HH:mm:ss");
+                })
+            setDataSource(res.data.item || []);
+        } else {
+            message.error(res?.data?.msg)
+        }
     }
 
     const updateList=(values: { id: any; title: any; content: any; status: any; })=>{
         const {id,title,content,status} = values
-        TaskUpdateApi({
+        updateTask({
             id:id,
-            // @ts-ignore
             title:title,
             content:content,
             status:status
-            // @ts-ignore
-        }).then((res: { status: number; msg: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | MessageArgsProps | null | undefined; })=>{
-            if (res.status === 200){
-                message.success(res.msg).then()
+        }).then(res=>{
+            if (res.status === Code.SuccessCode){
+                message.success(res?.data?.msg)
             }else{
-                message.error(res.msg).then()
+                message.error(res?.data?.msg)
             }
         })
     }
 
     const deleteList=(values: { id: any; })=>{
         const {id} = values
-        TaskDeleteApi({
+        deleteTask({
             id:id,
-            // @ts-ignore
-        }).then((res: { status: number; msg: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | MessageArgsProps | null | undefined; })=>{
-            if (res.status === 200){
-                message.success(res.msg).then()
+        }).then(res=>{
+            if (res.status === Code.SuccessCode){
+                message.success(res?.data?.msg)
             }else{
-                message.error(res.msg).then()
+                message.error(res?.data?.msg)
             }
         })
     }
@@ -77,7 +88,7 @@ const List: React.FC = () => {
     },[])
 
     // 分页
-    const onChange = (pages: React.SetStateAction<number>) => {
+    const onChange = (pages: number) => {
         getList(pages);
     }
 
@@ -89,10 +100,8 @@ const List: React.FC = () => {
                  showActions="hover"
                  toolBarRender={() => {
                      return [
-                         // @ts-ignore
-                         <TaskForm onCreate={()=>{
-                                 return getList(current);
-                             }}/>
+                            // @ts-ignore
+                            <TaskForm onCreate={()=>{return getList(current);}}/>
                          ];
                      }}
                  editable={{
@@ -106,12 +115,6 @@ const List: React.FC = () => {
                          return
                      }
                  }}
-    //                  editable={{
-    //     onDelete: async (key: any, record: { id: any; }, originRow: any) => {
-    //         deleteList(record)
-    //         return true;
-    //     },
-    // }}
         onDataSourceChange={setDataSource} metas={{
         title: {
             dataIndex: 'title',
@@ -121,11 +124,9 @@ const List: React.FC = () => {
         },
         subTitle: {
             dataIndex: 'start_time',
-            render: (_: any, row: { start_time: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal | null | undefined; }) => {
+            render: (_: any, row: { start_time: any}) => {
                 return (<Space size={0}>
-                        <Tag>
-                            {row.start_time}
-                        </Tag>
+                        <Tag>{row.start_time}</Tag>
                 </Space>);
             },
             search: false,

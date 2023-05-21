@@ -4,10 +4,9 @@ import React, {useState} from 'react';
 import {TaskCreateApi} from "../request/api";
 
 
-const TaskForm: React.FC = (props) => {
+const TaskForm: React.FC = (props:any) => {
     const [visiable, setVisiable] = useState(false);
     const [form] = Form.useForm();
-    // @ts-ignore
     const {onCreate} = props;
     // 打开弹窗
     const open = () => {
@@ -22,13 +21,12 @@ const TaskForm: React.FC = (props) => {
         form.submit()
     }
     // 提交后获取表单数据，请求接口，重置表单并关闭
-    const onSubmit = (values: { title: any; content: any; }) => {
+    const onSubmit = (values: { title: string; content: string; }) => {
         let {title, content} = values;
         TaskCreateApi({
             title: title,
             content: content
-            // @ts-ignore
-        }).then((res: { status: number; msg: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | MessageArgsProps | null | undefined; }) =>{
+        }).then((res: { status: number; msg: any }) =>{
             if(res.status===200){
                 message.success(res.msg).then()
             }else{

@@ -3,51 +3,28 @@ import { Button, message, Form, Input, MessageArgsProps} from 'antd';
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import {Link, useNavigate} from 'react-router-dom'
 import "../assets/login.less"
-import {LoginApi} from "../request/api";
-
+import {useDispatch} from "react-redux";
+import { login } from '../request/user';
+import { Code } from '../constant';
+import { save } from '../store/user';
 
 const Login: React.FC = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch();
 
-    const onFinish = (values: { username: string; password: string; }) => {
-        LoginApi({
-            user_name: values.username,
-            password: values.password
-        }).then(res=>{
-            if(res.status===200){
-                localStorage.setItem("token",res.data.token);
-                localStorage.setItem("user_name",res.data.user.user_name);
-                localStorage.setItem("avatar","https://q1.qlogo.cn/g?b=qq&nk=3274661196&s=640")
-                message.success("登陆成功").then();
-                // 跳到登录页
-                setTimeout(()=>{
-                    navigate('/list')
-                } ,800)
-            }else{
-                message.error(res.msg).then();
-            }
-        })
+    const onFinish = async (values: {
+        user_name: string;
+        password: string;
+    }) => {
+        const data:any = await login({...values});
+        if (data.status === Code.SuccessCode) {
+            dispatch(save({...data.data.user, token: data.data.token}));
+            message.success("登陆成功")
+            navigate('/');
+        } else {
+            message.error("账号名/密码错误")
+        }
     };
-
-    // const onFinish = (values: { username: string; password: string; }) => {
-    //     LoginApi({
-    //         user_name: values.username,
-    //         password: values.password
-    //     }).then(res) => {
-    //         if(res.status===200){
-    //             localStorage.setItem("token",res.data.token);
-    //             localStorage.setItem("user_name",res.data.user.user_name);
-    //             localStorage.setItem("avatar","https://q1.qlogo.cn/g?b=qq&nk=3274661196&s=640")
-    //             message.success("登陆成功").then();
-    //             // 跳到登录页
-    //             setTimeout(()=>{
-    //                 navigate('/list')
-    //             } ,800)
-    //         }else{
-    //             message.error(res.msg).then();
-    //         }
-    //     })
-    // };
 
     return (
         <div className="login">
@@ -63,7 +40,7 @@ const Login: React.FC = () => {
                         autoComplete="off"
                     >
                         <Form.Item
-                            name="username"
+                            name="user_name"
                             rules={[
                                 {
                                     required: true,
