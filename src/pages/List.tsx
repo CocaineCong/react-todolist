@@ -5,6 +5,7 @@ import moment from "moment";
 import TaskForm from "./Form";
 import { deleteTask, listTask, updateTask } from '../api/task';
 import { Code } from '../constant';
+import { stat } from 'fs';
 
 const defaultData = [
     {
@@ -33,37 +34,37 @@ const List: React.FC = () => {
                 setDataSource(res.data.item || []);
                 setTotal(res.data.total)
                 setCurrent(num)
-                message.success(res?.msg)
+                message.success(res?.data)
             }
         } else {
-            message.error(res?.data?.msg)
+            message.error(res?.error)
         }
     }
 
-    const updateList=(values: { id: any; title: any; content: any; status: any; })=>{
+    const updateList = async (values: { id: any; title: string; content: string; status: any; })=>{
         const {id,title,content,status} = values
-        const res:any = updateTask({
+        let res:any = await updateTask({
             id:id,
             title:title,
             content:content,
             status:status
         })
-        if (res.status === Code.SuccessCode){
-            message.success(res?.msg)
+        if (res?.data?.status === Code.SuccessCode){
+            message.success(res?.data)
         }else{
-            message.error(res?.data?.msg)
+            message.error(res?.error)
         }
     }
 
-    const deleteList=(values: { id: any; })=>{
+    const deleteList = async (values: { id: any; })=>{
         const {id} = values
-        const res:any = deleteTask({
+        const res:any = await deleteTask({
             id:id,
         })
         if (res.status === Code.SuccessCode){
             message.success(res?.msg)
         }else{
-            message.error(res?.data?.msg)
+            message.error(res?.error)
         }
     }
 

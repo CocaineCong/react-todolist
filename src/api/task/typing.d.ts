@@ -15,7 +15,7 @@ declare namespace API {
         title: string;
         content: string;
         id: any;
-        status: string | number;
+        status: any;
     }
 
     export type SearchTaskReq = {
