@@ -5,18 +5,14 @@ import {useNavigate} from "react-router-dom";
 import '../assets/base.less'
 
 const Header: React.FC = () => {
-    const [avatar,setAvatar]=useState('')
+    const [avatar,setAvatar]=useState('http://q1.qlogo.cn/g?b=qq&nk=3274661196&s=640')
     const [userName,setUserName]=useState("")
     const navigate = useNavigate();
 
     useEffect(()=>{
         let username1 = localStorage.getItem('user_name')
-        let avatar1 = localStorage.getItem('avatar')
         if(username1){
             setUserName(username1)
-        }
-        if(avatar1){
-            setAvatar(avatar1)
         }
     },[]);
 
@@ -46,7 +42,6 @@ const Header: React.FC = () => {
                         items,
                     }}
                 >
-                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                     <a onClick={(e) => e.preventDefault()}>
                         <Space>
                             <img src={avatar} className="avatar" alt=""/>

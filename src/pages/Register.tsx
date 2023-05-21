@@ -5,12 +5,9 @@ import {Link, useNavigate} from 'react-router-dom'
 import "../assets/login.less"
 import { register } from '../api/user';
 import { Code } from '../constant';
-import { useDispatch } from 'react-redux';
-import { save } from '../store/user';
 
 const Register: React.FC = () => {
     const navigate = useNavigate()
-    const dispatch = useDispatch();
 
     const onFinish = async (values: {
         user_name: string;
@@ -18,11 +15,10 @@ const Register: React.FC = () => {
     }) => {
         const data:any = await register({...values});
         if (data.status === Code.SuccessCode) {
-            dispatch(save({...data.data.user, token: data.data.token}));
-            message.success("登陆成功")
+            message.success("注册成功")
             navigate('/login');
         } else {
-            message.error("账号名/密码错误")
+            message.error(data?.data?.error)
         }
     };
 
@@ -40,7 +36,7 @@ const Register: React.FC = () => {
                     autoComplete="off"
                 >
                     <Form.Item
-                        name="username"
+                        name="user_name"
                         rules={[
                             {
                                 required: true,

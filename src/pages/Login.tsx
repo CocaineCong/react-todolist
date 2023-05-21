@@ -20,7 +20,7 @@ const Login: React.FC = () => {
         if (data.status === Code.SuccessCode) {
             dispatch(save({...data.data.user, token: data.data.token}));
             message.success("登陆成功")
-            navigate('/');
+            navigate('/list');
         } else {
             message.error("账号名/密码错误")
         }

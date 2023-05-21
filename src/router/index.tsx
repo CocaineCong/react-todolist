@@ -11,7 +11,7 @@ const BaseRouter = () => (
                 <Route path='/list' element={<List />}></Route>
             </Route>
             <Route path='/login' element={<Login />}></Route>
-            <Route path='/register' element={<Register/>}></Route>
+            <Route path='/register' element={<Register />}></Route>
         </Routes>
     </Router>
 )
