@@ -25,7 +25,7 @@ const TaskForm: React.FC = (props:any) => {
         createTask({
             title: title,
             content: content,
-            status:status,
+            status:0,
         }).then(res =>{
             if(res.status === Code.SuccessCode){
                 message.success(res?.data?.msg).then()

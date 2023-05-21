@@ -10,7 +10,7 @@ const defaultData = [
     {
         id: '1',
         title: '一键三连',
-        content: '给小生凡一的视频一键三连(这是写死在前端的列表)',
+        content: '给小生凡一的视频一键三连(这是写死在前端的列表,如果一条数据都没有就会出现)',
         start_time: '2023年01月01日'
     }
 ];
@@ -20,24 +20,6 @@ const List: React.FC = () => {
     const [current, setCurrent] = useState(1)
     const [pageSize, setPageSize] = useState(10)
 
-    // const getList = (num: number) => {
-    //     listTask({
-    //         start: num,
-    //         limit: pageSize,
-    //     }).then(res)=>{
-    //         if (res.status === 200 && res.data.item !== null ){
-    //             // @ts-ignore
-    //             (res.data.item)?.map((value: { start_time: string; }, _: any)=>{
-    //                     value.start_time = moment(parseInt(value.start_time)*1000).format("YYYY-MM-DD HH:mm:ss");
-    //                     })
-    //             setDataSource(res.data.item)
-    //             setTotal(res.data.total)
-    //             setCurrent(num)
-    //         }else if (res.status!==200){
-    //             message.error(res.msg).then()
-    //         }
-    //     })
-    // }
     const getList = async (num: number)=> {
         let res:any = await listTask({
             start: num,
@@ -47,9 +29,12 @@ const List: React.FC = () => {
             (res.data.item)?.map((value: { start_time: string; }, _: any)=>{
                     value.start_time = moment(parseInt(value.start_time)*1000).format("YYYY-MM-DD HH:mm:ss");
                 })
-            setDataSource(res.data.item || []);
-            setTotal(res.data.total)
-            setCurrent(num)
+            if (res?.data?.total !== 0) {
+                setDataSource(res.data.item || []);
+                setTotal(res.data.total)
+                setCurrent(num)
+                message.success(res?.msg)
+            }
         } else {
             message.error(res?.data?.msg)
         }
@@ -57,31 +42,29 @@ const List: React.FC = () => {
 
     const updateList=(values: { id: any; title: any; content: any; status: any; })=>{
         const {id,title,content,status} = values
-        updateTask({
+        const res:any = updateTask({
             id:id,
             title:title,
             content:content,
             status:status
-        }).then(res=>{
-            if (res.status === Code.SuccessCode){
-                message.success(res?.data?.msg)
-            }else{
-                message.error(res?.data?.msg)
-            }
         })
+        if (res.status === Code.SuccessCode){
+            message.success(res?.msg)
+        }else{
+            message.error(res?.data?.msg)
+        }
     }
 
     const deleteList=(values: { id: any; })=>{
         const {id} = values
-        deleteTask({
+        const res:any = deleteTask({
             id:id,
-        }).then(res=>{
-            if (res.status === Code.SuccessCode){
-                message.success(res?.data?.msg)
-            }else{
-                message.error(res?.data?.msg)
-            }
         })
+        if (res.status === Code.SuccessCode){
+            message.success(res?.msg)
+        }else{
+            message.error(res?.data?.msg)
+        }
     }
 
     // 请求文章列表
