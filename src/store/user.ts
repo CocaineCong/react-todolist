@@ -1,4 +1,4 @@
-import {LOGOUT, SAVE, UPDATE_AVATAR} from "./constant";
+import {LOGOUT, SAVE} from "./constant";
 
 const initState = {
   user_id: localStorage.getItem('id'),

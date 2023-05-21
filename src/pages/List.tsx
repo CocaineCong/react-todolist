@@ -1,9 +1,9 @@
 import { ProList } from '@ant-design/pro-components';
-import {message, MessageArgsProps, Pagination, Space, Tag} from 'antd';
+import {message, Pagination, Space, Tag} from 'antd';
 import React, {useState, useEffect} from 'react';
 import moment from "moment";
 import TaskForm from "./Form";
-import { deleteTask, listTask, updateTask } from '../request/task';
+import { deleteTask, listTask, updateTask } from '../api/task';
 import { Code } from '../constant';
 
 const defaultData = [
@@ -48,6 +48,8 @@ const List: React.FC = () => {
                     value.start_time = moment(parseInt(value.start_time)*1000).format("YYYY-MM-DD HH:mm:ss");
                 })
             setDataSource(res.data.item || []);
+            setTotal(res.data.total)
+            setCurrent(num)
         } else {
             message.error(res?.data?.msg)
         }

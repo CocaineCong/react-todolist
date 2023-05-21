@@ -1,10 +1,10 @@
 import React from 'react';
-import { Button, message, Form, Input, MessageArgsProps} from 'antd';
+import { Button, message, Form, Input} from 'antd';
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import {Link, useNavigate} from 'react-router-dom'
 import "../assets/login.less"
 import {useDispatch} from "react-redux";
-import { login } from '../request/user';
+import { login } from '../api/user';
 import { Code } from '../constant';
 import { save } from '../store/user';
 
