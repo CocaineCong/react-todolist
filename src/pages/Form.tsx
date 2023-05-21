@@ -20,22 +20,21 @@ const TaskForm: React.FC = (props:any) => {
         form.submit()
     }
     // 提交后获取表单数据，请求接口，重置表单并关闭
-    const onSubmit = (values: { title: string; content: string;status:any }) => {
+    const onSubmit = async (values: { title: string; content: string;status:any }) => {
         let {title, content,status} = values;
-        createTask({
+        let res:any = await createTask({
             title: title,
             content: content,
             status:0,
-        }).then(res =>{
-            if(res.status === Code.SuccessCode){
-                message.success(res?.data?.msg).then()
-            }else{
-                message.error(res?.data?.error).then()
-            }
-            if (onCreate){
-                onCreate()
-            }
         })
+        if(res.status === Code.SuccessCode) {
+            message.success(res?.msg).then()
+        } else {
+            message.error(res?.error).then()
+        }
+        if (onCreate){
+            onCreate()
+        }
         form.resetFields();
         close()
     }
