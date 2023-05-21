@@ -1,7 +1,6 @@
 import { ProList } from '@ant-design/pro-components';
 import {message, MessageArgsProps, Pagination, Space, Tag} from 'antd';
 import React, {useState, useEffect} from 'react';
-// @ts-ignore
 import {TaskListApi, TaskUpdateApi, TaskDeleteApi} from "../request/api";
 import moment from "moment";
 import TaskForm from "./Form";

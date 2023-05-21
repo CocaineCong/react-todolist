@@ -1,5 +1,4 @@
 import React,{useState,useEffect} from "react";
-// @ts-ignore
 import { DownOutlined } from '@ant-design/icons';
 import { Dropdown, Space, message } from 'antd';
 import {useNavigate} from "react-router-dom";
@@ -52,7 +51,7 @@ const Header: React.FC = () => {
                         <Space>
                             <img src={avatar} className="avatar" alt=""/>
                             <span>{userName}</span>
-                            <DownOutlined />
+                            <DownOutlined rev={undefined} />
                         </Space>
                     </a>
                 </Dropdown>

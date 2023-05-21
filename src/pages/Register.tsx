@@ -2,10 +2,8 @@ import React from 'react';
 import { Button, message, Form, Input, MessageArgsProps} from 'antd';
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import {Link, useNavigate} from 'react-router-dom'
-import "./less/Login.less"
-// @ts-ignore
+import "../assets/login.less"
 import {RegisterApi} from "../request/api";
-
 
 const Register: React.FC = () => {
     const navigate = useNavigate()
@@ -51,7 +49,7 @@ const Register: React.FC = () => {
                             },
                         ]}
                     >
-                        <Input size='large' prefix={<UserOutlined className="site-form-item-icon" />} placeholder="请输入用户名"/>
+                        <Input size='large' prefix={<UserOutlined className="site-form-item-icon" rev={undefined} />} placeholder="请输入用户名"/>
                     </Form.Item>
 
                     <Form.Item
@@ -63,7 +61,7 @@ const Register: React.FC = () => {
                             },
                         ]}
                     >
-                        <Input.Password size='large' prefix={<LockOutlined className="site-form-item-icon" />} placeholder="请输入密码"/>
+                        <Input.Password size='large' prefix={<LockOutlined className="site-form-item-icon" rev={undefined} />} placeholder="请输入密码"/>
                     </Form.Item>
 
                     <Form.Item>
